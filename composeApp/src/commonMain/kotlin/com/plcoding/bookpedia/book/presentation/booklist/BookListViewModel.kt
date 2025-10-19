@@ -22,7 +22,7 @@ class BookListViewModel : ViewModel() {
         is BookListScreenAction.OnBookClick -> {
             viewModelScope.launch {
                 ensureActive()
-                _action.emit(BookListViewModelAction.OpenBookDetails(action.book))
+                _action.emit(BookListViewModelAction.OnNavigateToBookDetails(action.book))
             }
         }
 
