@@ -3,6 +3,7 @@ package com.plcoding.bookpedia.book.presentation.booklist
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 class BookListViewModel : ViewModel() {
 
@@ -11,7 +12,16 @@ class BookListViewModel : ViewModel() {
 
     fun onAction(action: BookListAction) = when (action) {
         is BookListAction.OnBookClick -> {}
-        is BookListAction.OnSearchQueryChanged -> {}
-        is BookListAction.OnTabSelected -> {}
+        is BookListAction.OnSearchQueryChanged -> {
+            _state.update {
+                it.copy(searchQuery = action.query)
+            }
+        }
+
+        is BookListAction.OnTabSelected -> {
+            _state.update {
+                it.copy(selectedTabIndex = action.index)
+            }
+        }
     }
 }
