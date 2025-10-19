@@ -11,7 +11,7 @@ import org.koin.compose.viewmodel.koinViewModel
 fun BookListScreen(
     modifier: Modifier = Modifier,
     viewModel: BookListViewModel = koinViewModel(),
-    onBookClick: () -> Unit
+    onBookClick: (Book) -> Unit
 ) {
 
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -19,7 +19,9 @@ fun BookListScreen(
     BookListScreen(
         modifier = modifier,
         state = state,
-        onAction = {}
+        onAction = { action ->
+            viewModel.onAction(action)
+        }
     )
 }
 
@@ -27,7 +29,7 @@ fun BookListScreen(
 fun BookListScreen(
     modifier: Modifier,
     state: BookListState,
-    onAction: (Book) -> Unit,
+    onAction: (BookListAction) -> Unit,
 ) {
 
 }
