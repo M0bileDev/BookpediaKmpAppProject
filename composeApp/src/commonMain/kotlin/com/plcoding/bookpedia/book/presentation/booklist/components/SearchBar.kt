@@ -1,6 +1,7 @@
 package com.plcoding.bookpedia.book.presentation.booklist.components
 
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
@@ -11,6 +12,7 @@ import cmp_bookpedia.composeapp.generated.resources.search_hint
 import com.plcoding.bookpedia.core.presentation.DarkBlue
 import com.plcoding.bookpedia.core.presentation.SandYellow
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun SearchBar(
@@ -33,3 +35,28 @@ fun SearchBar(
     )
 }
 
+@Preview(name = "search_without_value")
+@Composable
+fun PreviewSearchBar() {
+    MaterialTheme {
+        SearchBar(
+            Modifier,
+            "Kotlin",
+            onSearchQueryChanged = {},
+            onImeSearch = {}
+        )
+    }
+}
+
+@Preview(name = "search_with_value")
+@Composable
+fun PreviewSearchBar2() {
+    MaterialTheme {
+        SearchBar(
+            Modifier,
+            "",
+            onSearchQueryChanged = {},
+            onImeSearch = {}
+        )
+    }
+}
