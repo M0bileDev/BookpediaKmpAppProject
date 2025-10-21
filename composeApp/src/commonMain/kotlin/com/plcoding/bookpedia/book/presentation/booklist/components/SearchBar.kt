@@ -1,10 +1,10 @@
 package com.plcoding.bookpedia.book.presentation.booklist.components
 
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import cmp_bookpedia.composeapp.generated.resources.Res
@@ -25,7 +25,7 @@ fun SearchBar(
         value = searchQuery,
         onValueChange = onSearchQueryChanged,
         shape = RoundedCornerShape(100),
-        colors = TextFieldDefaults.outlinedTextFieldColors(
+        colors = OutlinedTextFieldDefaults.colors(
             cursorColor = DarkBlue,
             focusedBorderColor = SandYellow
         ),
