@@ -66,7 +66,8 @@ fun SearchBar(
                 ) {
                     Icon(
                         painter = painterResource(Res.drawable.close_24px),
-                        contentDescription = stringResource(Res.string.clear_search_hint)
+                        contentDescription = stringResource(Res.string.clear_search_hint),
+                        tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                     )
                 }
             }
