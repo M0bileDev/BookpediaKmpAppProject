@@ -1,7 +1,7 @@
 package com.plcoding.bookpedia.book.presentation.booklist.components
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.background
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -10,10 +10,12 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import cmp_bookpedia.composeapp.generated.resources.Res
@@ -23,6 +25,7 @@ import cmp_bookpedia.composeapp.generated.resources.search_24px
 import cmp_bookpedia.composeapp.generated.resources.search_hint
 import cmp_bookpedia.composeapp.generated.resources.search_leading_icon
 import com.plcoding.bookpedia.core.presentation.DarkBlue
+import com.plcoding.bookpedia.core.presentation.DesertWhite
 import com.plcoding.bookpedia.core.presentation.SandYellow
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -33,16 +36,22 @@ fun SearchBar(
     modifier: Modifier = Modifier,
     searchQuery: String,
     onSearchQueryChanged: (String) -> Unit,
-    onImeSearch: () -> Unit
+    onImeSearch: () -> Unit,
+    backgroundColor: Color = DesertWhite,
+    shape: Shape = RoundedCornerShape(100),
+    cursorColor: Color = DarkBlue,
+    focusedBorderColor: Color = SandYellow,
+    iconsTint: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
 ) {
     OutlinedTextField(
-        modifier = modifier,
+        modifier = modifier.background(backgroundColor, shape = shape)
+            .minimumInteractiveComponentSize(),
         value = searchQuery,
         onValueChange = onSearchQueryChanged,
-        shape = RoundedCornerShape(100),
+        shape = shape,
         colors = OutlinedTextFieldDefaults.colors(
-            cursorColor = DarkBlue,
-            focusedBorderColor = SandYellow
+            cursorColor = cursorColor,
+            focusedBorderColor = focusedBorderColor
         ),
         placeholder = {
             Text(text = stringResource(Res.string.search_hint))
@@ -51,7 +60,7 @@ fun SearchBar(
             Icon(
                 painter = painterResource(Res.drawable.search_24px),
                 contentDescription = stringResource(Res.string.search_leading_icon),
-                tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                tint = iconsTint
             )
         },
         singleLine = true,
@@ -74,26 +83,23 @@ fun SearchBar(
                     Icon(
                         painter = painterResource(Res.drawable.close_24px),
                         contentDescription = stringResource(Res.string.clear_search_hint),
-                        tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                        tint = iconsTint
                     )
                 }
             }
-        }
-    )
+        })
 }
 
 @Preview(name = "search_without_value")
 @Composable
 fun PreviewSearchBar() {
     MaterialTheme {
-        Surface(modifier = Modifier.fillMaxWidth()) {
-            SearchBar(
-                Modifier,
-                "Kotlin",
-                onSearchQueryChanged = {},
-                onImeSearch = {}
-            )
-        }
+        SearchBar(
+            Modifier,
+            "Kotlin",
+            onSearchQueryChanged = {},
+            onImeSearch = {}
+        )
     }
 }
 
@@ -101,14 +107,11 @@ fun PreviewSearchBar() {
 @Composable
 fun PreviewSearchBar2() {
     MaterialTheme {
-        Surface(modifier = Modifier.fillMaxWidth()) {
-            SearchBar(
-                Modifier,
-                "",
-                onSearchQueryChanged = {},
-                onImeSearch = {},
-            )
-        }
-
+        SearchBar(
+            Modifier,
+            "",
+            onSearchQueryChanged = {},
+            onImeSearch = {},
+        )
     }
 }
