@@ -1,10 +1,13 @@
 package com.plcoding.bookpedia.book.presentation.booklist.components
 
+import androidx.compose.foundation.focusable
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -50,12 +53,14 @@ fun SearchBar(
 @Composable
 fun PreviewSearchBar() {
     MaterialTheme {
-        SearchBar(
-            Modifier,
-            "Kotlin",
-            onSearchQueryChanged = {},
-            onImeSearch = {}
-        )
+        Surface(modifier = Modifier.fillMaxWidth()) {
+            SearchBar(
+                Modifier,
+                "Kotlin",
+                onSearchQueryChanged = {},
+                onImeSearch = {}
+            )
+        }
     }
 }
 
@@ -63,11 +68,14 @@ fun PreviewSearchBar() {
 @Composable
 fun PreviewSearchBar2() {
     MaterialTheme {
-        SearchBar(
-            Modifier,
-            "",
-            onSearchQueryChanged = {},
-            onImeSearch = {}
-        )
+        Surface(modifier = Modifier.fillMaxWidth()) {
+            SearchBar(
+                Modifier,
+                "",
+                onSearchQueryChanged = {},
+                onImeSearch = {},
+            )
+        }
+
     }
 }
