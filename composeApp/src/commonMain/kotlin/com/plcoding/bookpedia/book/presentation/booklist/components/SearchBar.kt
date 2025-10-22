@@ -39,7 +39,7 @@ fun SearchBar(
     modifier: Modifier = Modifier,
     searchQuery: String,
     onSearchQueryChanged: (String) -> Unit,
-    onImeSearch: () -> Unit,
+    onImeDone: () -> Unit,
     backgroundColor: Color = DesertWhite,
     shape: Shape = RoundedCornerShape(100),
     cursorColor: Color = DarkBlue,
@@ -74,13 +74,13 @@ fun SearchBar(
             },
             singleLine = true,
             keyboardActions = KeyboardActions(
-                onSearch = {
-                    onImeSearch()
+                onDone = {
+                    onImeDone()
                 }
             ),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Search
+                imeAction = ImeAction.Done
             ),
             trailingIcon = {
                 AnimatedVisibility(
@@ -108,7 +108,7 @@ fun PreviewSearchBar() {
             Modifier,
             "Kotlin",
             onSearchQueryChanged = {},
-            onImeSearch = {}
+            onImeDone = {}
         )
     }
 }
@@ -121,7 +121,7 @@ fun PreviewSearchBar2() {
             Modifier,
             "",
             onSearchQueryChanged = {},
-            onImeSearch = {},
+            onImeDone = {},
         )
     }
 }
