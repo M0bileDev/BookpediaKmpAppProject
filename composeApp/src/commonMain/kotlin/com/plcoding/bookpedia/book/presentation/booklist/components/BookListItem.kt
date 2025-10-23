@@ -27,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
@@ -51,14 +52,16 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun BookListItem(
     modifier: Modifier = Modifier,
     book: Book,
+    backgroundColor: Color = LightBlue.copy(alpha = 0.2f),
     onClick: () -> Unit
 ) {
     Surface(
-        modifier = modifier.clickable(onClick = onClick).background(LightBlue.copy(alpha = 0.2f)),
+        modifier = modifier.clickable(onClick = onClick),
         shape = RoundedCornerShape(32.dp)
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(16.dp).height(IntrinsicSize.Min),
+            modifier = Modifier.background(backgroundColor).fillMaxWidth().padding(16.dp)
+                .height(IntrinsicSize.Min),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
