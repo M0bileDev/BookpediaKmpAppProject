@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -30,11 +31,17 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cmp_bookpedia.composeapp.generated.resources.Res
+import cmp_bookpedia.composeapp.generated.resources.average_rating_x
 import cmp_bookpedia.composeapp.generated.resources.book_cover_hint
 import cmp_bookpedia.composeapp.generated.resources.book_error_2
+import cmp_bookpedia.composeapp.generated.resources.chevron_right_24px
+import cmp_bookpedia.composeapp.generated.resources.details_icon_hint
+import cmp_bookpedia.composeapp.generated.resources.star_24px
+import cmp_bookpedia.composeapp.generated.resources.star_hint
 import coil3.compose.rememberAsyncImagePainter
 import com.plcoding.bookpedia.book.domain.Book
 import com.plcoding.bookpedia.core.presentation.LightBlue
+import com.plcoding.bookpedia.core.presentation.SandYellow
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -105,6 +112,23 @@ fun BookListItem(
                         overflow = TextOverflow.Ellipsis
                     )
                 }
+                book.averageRating?.let { rating ->
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = stringResource(Res.string.average_rating_x, rating.toFloat()),
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+                    Icon(
+                        painter = painterResource(Res.drawable.star_24px),
+                        contentDescription = stringResource(Res.string.star_hint),
+                        tint = SandYellow
+                    )
+                }
+                Icon(
+                    painter = painterResource(Res.drawable.chevron_right_24px),
+                    contentDescription = stringResource(Res.string.details_icon_hint)
+                )
             }
         }
     }
