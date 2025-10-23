@@ -45,6 +45,7 @@ import com.plcoding.bookpedia.core.presentation.LightBlue
 import com.plcoding.bookpedia.core.presentation.SandYellow
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun BookListItem(
@@ -57,7 +58,8 @@ fun BookListItem(
         shape = RoundedCornerShape(32.dp)
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(16.dp).height(IntrinsicSize.Min)
+            modifier = Modifier.fillMaxWidth().padding(16.dp).height(IntrinsicSize.Min),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
                 modifier = Modifier.height(100.dp),
@@ -96,7 +98,7 @@ fun BookListItem(
                 }
             }
             Column(
-                modifier = Modifier.fillMaxHeight().weight(1f),
+                modifier = Modifier.fillMaxHeight().padding(horizontal = 16.dp).weight(1f),
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
@@ -116,22 +118,46 @@ fun BookListItem(
                 book.averageRating?.let { rating ->
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
-                            text = stringResource(Res.string.average_rating_x, rating.toFloat()),
+                            text = stringResource(Res.string.average_rating_x, rating),
                             style = MaterialTheme.typography.bodyMedium
                         )
+                        Icon(
+                            painter = painterResource(Res.drawable.star_24px),
+                            contentDescription = stringResource(Res.string.star_hint),
+                            tint = SandYellow
+                        )
                     }
-                    Icon(
-                        painter = painterResource(Res.drawable.star_24px),
-                        contentDescription = stringResource(Res.string.star_hint),
-                        tint = SandYellow
-                    )
                 }
-                Icon(
-                    modifier = Modifier.size(36.dp),
-                    painter = painterResource(Res.drawable.chevron_right_24px),
-                    contentDescription = stringResource(Res.string.details_icon_hint)
-                )
+
             }
+            Icon(
+                modifier = Modifier.size(36.dp),
+                painter = painterResource(Res.drawable.chevron_right_24px),
+                contentDescription = stringResource(Res.string.details_icon_hint)
+            )
         }
+    }
+}
+
+@Preview
+@Composable
+fun PreviewBookListItem() {
+    MaterialTheme {
+        BookListItem(
+            book = Book(
+                "0",
+                "Kotlin",
+                "",
+                listOf("Lorem ipsum"),
+                "Lorem ipsum",
+                emptyList(),
+                "2000",
+                6.0,
+                100,
+                420,
+                1
+            ),
+            onClick = {}
+        )
     }
 }
