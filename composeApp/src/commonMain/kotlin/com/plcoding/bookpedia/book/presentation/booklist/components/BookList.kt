@@ -1,8 +1,12 @@
 package com.plcoding.bookpedia.book.presentation.booklist.components
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,6 +23,22 @@ fun BookList(
     LazyColumn(
         modifier = modifier,
         state = scrollState,
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) { }
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp)
+    ) {
+        items(
+            items = books,
+            key = { book ->
+                book.id
+            }
+        ) { book ->
+            BookListItem(
+                modifier = Modifier.widthIn(max = 700.dp).fillMaxWidth(),
+                book = book,
+                onClick = {
+                    onClick(book)
+                }
+            )
+        }
+    }
 }
