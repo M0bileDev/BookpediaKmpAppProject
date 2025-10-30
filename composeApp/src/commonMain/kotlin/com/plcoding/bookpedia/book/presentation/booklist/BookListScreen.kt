@@ -1,13 +1,20 @@
 package com.plcoding.bookpedia.book.presentation.booklist
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Surface
@@ -21,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
@@ -29,8 +37,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import cmp_bookpedia.composeapp.generated.resources.Res
 import cmp_bookpedia.composeapp.generated.resources.favorites
+import cmp_bookpedia.composeapp.generated.resources.no_search_results
 import cmp_bookpedia.composeapp.generated.resources.search_results
 import com.plcoding.bookpedia.book.domain.Book
+import com.plcoding.bookpedia.book.presentation.booklist.components.BookList
 import com.plcoding.bookpedia.book.presentation.booklist.components.SearchBar
 import com.plcoding.bookpedia.core.presentation.DarkBlue
 import com.plcoding.bookpedia.core.presentation.SandYellow
@@ -76,6 +86,12 @@ fun BookListScreen(
     onAction: (BookListScreenAction) -> Unit,
 ) {
     val keyboard = LocalSoftwareKeyboardController.current
+    val pagerState = rememberPagerState { 2 }
+    val searchResultListState = rememberLazyListState()
+
+    LaunchedEffect(state.searchResult) {
+        searchResultListState.animateScrollToItem(0)
+    }
 
     Column(
         modifier = modifier.fillMaxSize().background(DarkBlue).statusBarsPadding()
@@ -128,6 +144,60 @@ fun BookListScreen(
                         unselectedContentColor = Color.Black.copy(alpha = 0.5f)
                     ) {
                         Text(text = stringResource(Res.string.favorites))
+                    }
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                HorizontalPager(
+                    modifier = Modifier.weight(1f).fillMaxWidth(),
+                    state = pagerState
+                ) { pageIndex ->
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        when (pageIndex) {
+                            0 -> {
+                                if (state.isLoading) {
+                                    CircularProgressIndicator()
+                                } else {
+                                    when {
+                                        state.errorMessage != null -> {
+                                            Text(
+                                                text = state.errorMessage.asString(),
+                                                textAlign = TextAlign.Center,
+                                                style = MaterialTheme.typography.headlineSmall,
+                                                color = MaterialTheme.colorScheme.error
+                                            )
+                                        }
+
+                                        state.searchResult.isEmpty() -> {
+                                            Text(
+                                                text = stringResource(Res.string.no_search_results),
+                                                textAlign = TextAlign.Center,
+                                                style = MaterialTheme.typography.headlineSmall,
+                                                color = MaterialTheme.colorScheme.error
+                                            )
+                                        }
+
+                                        else -> {
+                                            BookList(
+                                                modifier = Modifier.fillMaxWidth(),
+                                                books = state.searchResult,
+                                                onClick = { book ->
+                                                    onAction(BookListScreenAction.OnBookClick(book))
+                                                },
+                                                scrollState = searchResultListState
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+
+                            1 -> {
+                                if (state.isLoading) {
+                                    CircularProgressIndicator()
+                                } else {
+
+                                }
+                            }
+                        }
                     }
                 }
             }
