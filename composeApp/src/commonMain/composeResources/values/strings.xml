@@ -7,4 +7,6 @@
     <string name="average_rating_x">Average rating: %1$.2f</string>
     <string name="star_hint">Rating star</string>
     <string name="details_icon_hint">Details icon</string>
+    <string name="search_results">Search results</string>
+    <string name="favorites">Favorites</string>
 </resources>
