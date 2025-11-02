@@ -194,10 +194,13 @@ fun BookListScreen(
                             }
 
                             FAVORITES -> {
-                                if (state.isLoading) {
-                                    CircularProgressIndicator()
-                                } else {
-
+                                if (state.favoriteBooks.isEmpty()){
+                                    Text(
+                                        text = stringResource(Res.string.no_search_results),
+                                        textAlign = TextAlign.Center,
+                                        style = MaterialTheme.typography.headlineSmall,
+                                        color = MaterialTheme.colorScheme.error
+                                    )
                                 }
                             }
                         }
