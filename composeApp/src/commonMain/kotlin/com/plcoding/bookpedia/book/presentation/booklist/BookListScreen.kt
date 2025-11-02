@@ -49,6 +49,9 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
+const val BOOKS = 0
+const val FAVORITES = 1
+
 @Composable
 fun BookListScreen(
     modifier: Modifier = Modifier,
@@ -129,8 +132,8 @@ fun BookListScreen(
                 ) {
                     Tab(
                         modifier = Modifier.padding(vertical = 16.dp),
-                        selected = state.selectedTabIndex == 0,
-                        onClick = { onAction(BookListScreenAction.OnTabSelected(0)) },
+                        selected = state.selectedTabIndex == BOOKS,
+                        onClick = { onAction(BookListScreenAction.OnTabSelected(BOOKS)) },
                         selectedContentColor = SandYellow,
                         unselectedContentColor = Color.Black.copy(alpha = 0.5f),
                     ) {
@@ -138,8 +141,8 @@ fun BookListScreen(
                     }
                     Tab(
                         modifier = Modifier.padding(vertical = 16.dp),
-                        selected = state.selectedTabIndex == 1,
-                        onClick = { onAction(BookListScreenAction.OnTabSelected(1)) },
+                        selected = state.selectedTabIndex == FAVORITES,
+                        onClick = { onAction(BookListScreenAction.OnTabSelected(FAVORITES)) },
                         selectedContentColor = SandYellow,
                         unselectedContentColor = Color.Black.copy(alpha = 0.5f)
                     ) {
@@ -153,7 +156,7 @@ fun BookListScreen(
                 ) { pageIndex ->
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         when (pageIndex) {
-                            0 -> {
+                            BOOKS -> {
                                 if (state.isLoading) {
                                     CircularProgressIndicator()
                                 } else {
@@ -190,7 +193,7 @@ fun BookListScreen(
                                 }
                             }
 
-                            1 -> {
+                            FAVORITES -> {
                                 if (state.isLoading) {
                                     CircularProgressIndicator()
                                 } else {
