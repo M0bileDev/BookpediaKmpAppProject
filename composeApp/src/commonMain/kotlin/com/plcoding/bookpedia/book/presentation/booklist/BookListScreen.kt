@@ -92,6 +92,7 @@ fun BookListScreen(
     val keyboard = LocalSoftwareKeyboardController.current
     val pagerState = rememberPagerState { 2 }
     val searchResultListState = rememberLazyListState()
+    val favoriteBooksListState = rememberLazyListState()
 
     LaunchedEffect(state.searchResult) {
         searchResultListState.animateScrollToItem(0)
@@ -209,7 +210,7 @@ fun BookListScreen(
                                         onClick = { book ->
                                             onAction(BookListScreenAction.OnBookClick(book))
                                         },
-                                        scrollState = searchResultListState
+                                        scrollState = favoriteBooksListState
                                     )
                                 }
                             }
