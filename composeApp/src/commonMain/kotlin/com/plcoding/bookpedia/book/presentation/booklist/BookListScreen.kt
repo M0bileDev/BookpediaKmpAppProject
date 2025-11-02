@@ -98,6 +98,10 @@ fun BookListScreen(
         searchResultListState.animateScrollToItem(0)
     }
 
+    LaunchedEffect(state.selectedTabIndex){
+        pagerState.animateScrollToPage(state.selectedTabIndex)
+    }
+
     Column(
         modifier = modifier.fillMaxSize().background(DarkBlue).statusBarsPadding()
     ) {
