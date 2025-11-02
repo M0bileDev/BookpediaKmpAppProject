@@ -13,5 +13,21 @@ data class BookListState(
 ) {
     companion object {
         fun createDefaultState() = BookListState()
+        fun previewBooks() = (1..100).map {
+            Book(
+                id = it.toString(),
+                title = "Book $it",
+                "https://test.com",
+                authors = listOf("Lorem ipsum"),
+                description = "Description $it",
+                languages = listOf("Lorem ipsum"),
+                firstPublicationYear = "2000",
+                averageRating = 4.7564,
+                ratingCount = 6,
+                numPages = 200,
+                numEdition = 2
+
+            )
+        }
     }
 }
