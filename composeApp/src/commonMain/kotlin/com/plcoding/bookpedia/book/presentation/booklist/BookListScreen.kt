@@ -202,6 +202,15 @@ fun BookListScreen(
                                         style = MaterialTheme.typography.headlineSmall,
                                         color = MaterialTheme.colorScheme.error
                                     )
+                                }else{
+                                    BookList(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        books = state.favoriteBooks,
+                                        onClick = { book ->
+                                            onAction(BookListScreenAction.OnBookClick(book))
+                                        },
+                                        scrollState = searchResultListState
+                                    )
                                 }
                             }
                         }
