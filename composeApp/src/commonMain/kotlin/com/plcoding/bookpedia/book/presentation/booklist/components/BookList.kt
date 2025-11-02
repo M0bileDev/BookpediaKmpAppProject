@@ -27,7 +27,7 @@ fun BookList(
         modifier = modifier,
         state = scrollState,
         verticalArrangement = Arrangement.spacedBy(12.dp),
-        contentPadding = PaddingValues(horizontal = 16.dp)
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp)
     ) {
         items(
             items = books,
