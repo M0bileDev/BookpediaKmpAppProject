@@ -60,8 +60,7 @@ fun BookListItem(
         shape = RoundedCornerShape(32.dp)
     ) {
         Row(
-            modifier = Modifier.background(backgroundColor).fillMaxWidth().padding(16.dp)
-                .height(IntrinsicSize.Min),
+            modifier = Modifier.background(backgroundColor).fillMaxWidth().padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
@@ -101,7 +100,7 @@ fun BookListItem(
                 }
             }
             Column(
-                modifier = Modifier.fillMaxHeight().padding(horizontal = 16.dp).weight(1f),
+                modifier = Modifier.padding(horizontal = 16.dp).weight(1f),
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
