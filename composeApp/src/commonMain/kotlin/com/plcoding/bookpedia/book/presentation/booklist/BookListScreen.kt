@@ -102,6 +102,10 @@ fun BookListScreen(
         pagerState.animateScrollToPage(state.selectedTabIndex)
     }
 
+    LaunchedEffect(pagerState.currentPage){
+        onAction(BookListScreenAction.OnTabSelected(pagerState.currentPage))
+    }
+
     Column(
         modifier = modifier.fillMaxSize().background(DarkBlue).statusBarsPadding()
     ) {
