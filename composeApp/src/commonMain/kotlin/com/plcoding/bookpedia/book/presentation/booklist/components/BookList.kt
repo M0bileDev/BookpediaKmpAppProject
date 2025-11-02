@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.plcoding.bookpedia.book.domain.Book
+import com.plcoding.bookpedia.book.presentation.booklist.BookListState.Companion.previewBooks
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -51,34 +52,7 @@ fun PreviewBookList() {
     MaterialTheme {
         BookList(
             modifier = Modifier.fillMaxWidth(),
-            books = listOf(
-                Book(
-                    "0",
-                    "Kotlin",
-                    "",
-                    listOf("Lorem ipsum"),
-                    "Lorem ipsum",
-                    emptyList(),
-                    "2000",
-                    6.0,
-                    100,
-                    420,
-                    1
-                ),
-                Book(
-                    "1",
-                    "Kotlin 2.2.21",
-                    "",
-                    listOf("Lorem ipsum"),
-                    "Lorem ipsum",
-                    emptyList(),
-                    "2000",
-                    6.0,
-                    100,
-                    420,
-                    1
-                )
-            ),
+            books = previewBooks(),
             onClick = {}
         )
     }
