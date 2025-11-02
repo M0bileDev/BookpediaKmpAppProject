@@ -6,10 +6,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -47,6 +45,7 @@ import com.plcoding.bookpedia.core.presentation.SandYellow
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import kotlin.math.floor
 
 @Composable
 fun BookListItem(
@@ -120,7 +119,10 @@ fun BookListItem(
                 book.averageRating?.let { rating ->
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
-                            text = stringResource(Res.string.average_rating_x, rating),
+                            text = stringResource(
+                                Res.string.average_rating_x,
+                                floor(rating).toInt().toString()
+                            ),
                             style = MaterialTheme.typography.bodyMedium
                         )
                         Icon(
@@ -154,7 +156,7 @@ fun PreviewBookListItem() {
                 "Lorem ipsum",
                 emptyList(),
                 "2000",
-                6.0,
+                6.456,
                 100,
                 420,
                 1
