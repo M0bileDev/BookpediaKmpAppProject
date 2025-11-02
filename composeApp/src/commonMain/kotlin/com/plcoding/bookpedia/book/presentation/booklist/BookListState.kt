@@ -13,6 +13,7 @@ data class BookListState(
 ) {
     companion object {
         fun createDefaultState() = BookListState()
+        fun createPreviewState() = BookListState(searchResult = previewBooks())
         fun previewBooks() = (1..100).map {
             Book(
                 id = it.toString(),

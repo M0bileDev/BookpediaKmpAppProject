@@ -235,7 +235,7 @@ fun BookListScreen(
 fun PreviewBookListScreen() {
     MaterialTheme {
         BookListScreen(
-            state = BookListState.createDefaultState(),
+            state = BookListState.createPreviewState(),
             onAction = {}
         )
     }
