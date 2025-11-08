@@ -11,4 +11,12 @@
     <string name="favorites">Favorites</string>
     <string name="no_search_results">No search results</string>
     <string name="no_favorites_results">No favorites results</string>
+
+    <string name="data_error_disk_full">Error: Disk is full</string>
+    <string name="data_error_unknown">Error: Something went wrong</string>
+    <string name="data_error_request_timeout">Error: Request timeout</string>
+    <string name="data_error_too_many_request">Error: Too many requests</string>
+    <string name="data_error_no_internet">Error: No internet connection</string>
+    <string name="data_error_server">Error: Server error</string>
+    <string name="data_error_serialization">Error: Serialization problems</string>
 </resources>
