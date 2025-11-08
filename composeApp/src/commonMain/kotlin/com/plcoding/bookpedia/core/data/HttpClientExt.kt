@@ -4,7 +4,11 @@ import com.plcoding.bookpedia.core.domain.DataError
 import com.plcoding.bookpedia.core.domain.Result
 import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.call.body
+import io.ktor.client.network.sockets.SocketTimeoutException
 import io.ktor.client.statement.HttpResponse
+import io.ktor.util.network.UnresolvedAddressException
+import kotlinx.coroutines.ensureActive
+import kotlin.coroutines.coroutineContext
 
 suspend inline fun <reified T> fromResponseToResult(
     response: HttpResponse
@@ -24,4 +28,22 @@ suspend inline fun <reified T> fromResponseToResult(
         in 500..599 -> Result.Error(DataError.Remote.SERVER)
         else -> Result.Error(DataError.Remote.UNKNOWN)
     }
+}
+
+suspend inline fun <reified T> safeCall(
+    execute: () -> HttpResponse
+): Result<T, DataError.Remote> {
+    val response = try {
+        execute()
+    } catch (ste: SocketTimeoutException) {
+        return Result.Error(DataError.Remote.REQUEST_TIMEOUT)
+    } catch (uae: UnresolvedAddressException) {
+        return Result.Error(DataError.Remote.NO_INTERNET)
+    } catch (e: Exception) {
+        //rethrow CancellationException
+        coroutineContext.ensureActive()
+        return Result.Error(DataError.Remote.UNKNOWN)
+    }
+
+    return fromResponseToResult(response)
 }
