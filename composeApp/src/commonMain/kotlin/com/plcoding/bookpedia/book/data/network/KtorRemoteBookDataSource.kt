@@ -1,6 +1,6 @@
 package com.plcoding.bookpedia.book.data.network
 
-import com.plcoding.bookpedia.book.data.dto.search.SearchedBookDto
+import com.plcoding.bookpedia.book.data.dto.search.SearchedBookResponseDto
 import com.plcoding.bookpedia.core.data.safeCall
 import com.plcoding.bookpedia.core.domain.DataError
 import com.plcoding.bookpedia.core.domain.Result
@@ -16,8 +16,8 @@ class KtorRemoteBookDataSource(
     override suspend fun searchBooks(
         query: String,
         limit: Int?
-    ): Result<SearchedBookDto, DataError> {
-        return safeCall {
+    ): Result<SearchedBookResponseDto, DataError.Remote> {
+        return safeCall<SearchedBookResponseDto> {
             httpClient.get(
                 "$BASE_URL/search.json"
             ) {
