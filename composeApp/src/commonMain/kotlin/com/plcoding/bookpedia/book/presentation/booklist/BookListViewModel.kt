@@ -32,8 +32,7 @@ class BookListViewModel(
     private var searchJob: Job? = null
 
     private val _state = MutableStateFlow(BookListState.createDefaultState())
-    val state
-        get() = _state.onStart {
+    val state = _state.onStart {
             if (cachedBooks.isEmpty()) {
                 observeSearchQuery()
             }
