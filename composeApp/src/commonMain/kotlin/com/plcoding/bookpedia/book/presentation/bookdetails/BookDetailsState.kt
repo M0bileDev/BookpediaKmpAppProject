@@ -6,4 +6,8 @@ data class BookDetailsState(
     val isLoading: Boolean = true,
     val isFavorite: Boolean = false,
     val book: Book? = null
-)
+){
+    companion object{
+        fun createDefault() = BookDetailsState()
+    }
+}
