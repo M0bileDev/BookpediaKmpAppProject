@@ -38,7 +38,7 @@ class BookListViewModel(
             }
         }.stateIn(
             viewModelScope,
-            SharingStarted.WhileSubscribed(5000L),
+            SharingStarted.Lazily,
             _state.value
         )
 
