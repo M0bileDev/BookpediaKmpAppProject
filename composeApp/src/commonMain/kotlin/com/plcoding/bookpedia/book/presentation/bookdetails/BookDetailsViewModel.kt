@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class BookDetailsViewModel : ViewModel() {
@@ -19,15 +20,19 @@ class BookDetailsViewModel : ViewModel() {
 
     fun onAction(action: BookDetailsAction) {
         when (action) {
-            BookDetailsAction.OnBackClick -> {
+            is BookDetailsAction.OnBackClick -> {
                 viewModelScope.launch {
                     ensureActive()
                     _action.emit(BookDetailsViewModelAction.OnNavigateBack)
                 }
             }
 
-            BookDetailsAction.OnFavoriteClick -> TODO()
-            is BookDetailsAction.OnSelectedBookChanged -> TODO()
+            is BookDetailsAction.OnFavoriteClick -> {}
+            is BookDetailsAction.OnSelectedBookChanged -> {
+                _state.update { it.copy(
+                    book = action.book
+                ) }
+            }
         }
     }
 }
