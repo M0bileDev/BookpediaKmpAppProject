@@ -1,19 +1,18 @@
 package com.plcoding.bookpedia.app
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.plcoding.bookpedia.book.presentation.BookSharedViewModel
+import com.plcoding.bookpedia.book.presentation.bookdetails.BookDetailsAction
+import com.plcoding.bookpedia.book.presentation.bookdetails.BookDetailsScreen
+import com.plcoding.bookpedia.book.presentation.bookdetails.BookDetailsViewModel
 import com.plcoding.bookpedia.book.presentation.booklist.BookListScreen
 import com.plcoding.bookpedia.book.presentation.booklist.BookListViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -51,11 +50,20 @@ fun App() {
                     val sharedViewModel =
                         navBackStackEntry.sharedKoinViewModel<BookSharedViewModel>(navController)
                     val book by sharedViewModel.selectedBook.collectAsStateWithLifecycle()
-                    Box(
-                        modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
-                    ) {
-                        Text("Book details screen with book: $book")
+                    val viewModel = koinViewModel<BookDetailsViewModel>()
+
+                    LaunchedEffect(book) {
+                        book?.let {
+                            viewModel.onAction(BookDetailsAction.OnSelectedBookChanged(it))
+                        }
                     }
+
+                    BookDetailsScreen(
+                        viewModel = viewModel,
+                        onBackClick = {
+                            navController.navigateUp()
+                        }
+                    )
                 }
             }
         }
