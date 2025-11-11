@@ -20,7 +20,6 @@
     <string name="data_error_server">Error: Server error</string>
     <string name="data_error_serialization">Error: Serialization problems</string>
 
-    <string name="book_cover_hint">Book cover</string>
     <string name="rating">Rating</string>
     <string name="pages">Pages</string>
     <string name="languages">Languages</string>
