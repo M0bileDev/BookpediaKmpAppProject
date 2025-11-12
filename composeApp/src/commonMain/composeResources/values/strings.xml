@@ -25,4 +25,8 @@
     <string name="languages">Languages</string>
     <string name="synopsis">Synopsis</string>
     <string name="description_not_available">Description not available</string>
+
+    <string name="back_arrow_hint">Arrow back</string>
+    <string name="add_to_favorite">Add to favorites</string>
+    <string name="remove_from_favorites">Remove from favorites</string>
 </resources>
