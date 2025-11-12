@@ -33,14 +33,14 @@ class BookListViewModel(
 
     private val _state = MutableStateFlow(BookListState.createDefaultState())
     val state = _state.onStart {
-            if (cachedBooks.isEmpty()) {
-                observeSearchQuery()
-            }
-        }.stateIn(
-            viewModelScope,
-            SharingStarted.Lazily,
-            _state.value
-        )
+        if (cachedBooks.isEmpty()) {
+            observeSearchQuery()
+        }
+    }.stateIn(
+        viewModelScope,
+        SharingStarted.Lazily,
+        _state.value
+    )
 
     private val _action = MutableSharedFlow<BookListViewModelAction>()
     val action get() = _action.asSharedFlow()
