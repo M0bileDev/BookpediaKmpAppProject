@@ -1,13 +1,22 @@
 package com.plcoding.bookpedia.book.presentation.bookdetails.components
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -18,6 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
@@ -25,6 +35,7 @@ import cmp_bookpedia.composeapp.generated.resources.Res
 import cmp_bookpedia.composeapp.generated.resources.arrow_back_24px
 import cmp_bookpedia.composeapp.generated.resources.back_arrow_hint
 import cmp_bookpedia.composeapp.generated.resources.book_cover_hint
+import cmp_bookpedia.composeapp.generated.resources.book_error_2
 import coil3.compose.rememberAsyncImagePainter
 import com.plcoding.bookpedia.core.presentation.DarkBlue
 import com.plcoding.bookpedia.core.presentation.DesertWhite
@@ -93,6 +104,46 @@ fun BlurredImageBackground(
                 painter = painterResource(Res.drawable.arrow_back_24px),
                 contentDescription = stringResource(Res.string.back_arrow_hint)
             )
+        }
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.fillMaxHeight(fraction = 0.15f))
+            ElevatedCard(
+                modifier = Modifier.widthIn(200.dp).aspectRatio(2 / 3f),
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.elevatedCardColors(
+                    containerColor = Color.Transparent
+                ),
+                elevation = CardDefaults.elevatedCardElevation(
+                    defaultElevation = 15.dp
+                )
+            ) {
+                AnimatedContent(
+                    targetState = imageLoadResult
+                ) { result ->
+                    when (result) {
+                        null -> CircularProgressIndicator()
+                        else -> {
+                            Box {
+                                Image(
+                                    modifier = Modifier.fillMaxSize().background(Color.Transparent),
+                                    painter = if (result.isSuccess) painter else painterResource(Res.drawable.book_error_2),
+                                    contentDescription = stringResource(Res.string.book_cover_hint),
+                                    contentScale = if (result.isSuccess) {
+                                        ContentScale.Crop
+                                    } else {
+                                        ContentScale.Fit
+                                    }
+                                )
+
+                            }
+
+                        }
+                    }
+                }
+            }
         }
     }
 
