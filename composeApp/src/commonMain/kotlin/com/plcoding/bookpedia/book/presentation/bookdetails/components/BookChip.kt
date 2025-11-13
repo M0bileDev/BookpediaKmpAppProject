@@ -21,7 +21,7 @@ enum class ChipSize(val dpSize: Dp) {
 
 @Composable
 fun BookChip(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     chipSize: ChipSize = ChipSize.REGULAR,
     backgroundColor: Color = LightBlue,
     verticalPadding: Dp = 8.dp,
