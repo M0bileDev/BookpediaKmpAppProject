@@ -169,8 +169,7 @@ fun BlurredImageBackground(
                     }
                 }
             }
+            content()
         }
-        content()
     }
-
 }
