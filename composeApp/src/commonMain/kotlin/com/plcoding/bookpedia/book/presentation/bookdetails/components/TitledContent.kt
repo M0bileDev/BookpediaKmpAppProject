@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun TitledContent(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     horizontal: Alignment.Horizontal = Alignment.CenterHorizontally,
     title: String,
     titleStyle: TextStyle = MaterialTheme.typography.titleSmall,
