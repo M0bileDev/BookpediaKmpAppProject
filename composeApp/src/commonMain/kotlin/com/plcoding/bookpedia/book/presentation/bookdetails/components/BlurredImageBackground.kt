@@ -10,9 +10,9 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -27,18 +27,24 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import cmp_bookpedia.composeapp.generated.resources.Res
+import cmp_bookpedia.composeapp.generated.resources.add_to_favorite
 import cmp_bookpedia.composeapp.generated.resources.arrow_back_24px
 import cmp_bookpedia.composeapp.generated.resources.back_arrow_hint
 import cmp_bookpedia.composeapp.generated.resources.book_cover_hint
 import cmp_bookpedia.composeapp.generated.resources.book_error_2
+import cmp_bookpedia.composeapp.generated.resources.favorite_24px
+import cmp_bookpedia.composeapp.generated.resources.favorite_filled_24px
+import cmp_bookpedia.composeapp.generated.resources.remove_from_favorites
 import coil3.compose.rememberAsyncImagePainter
 import com.plcoding.bookpedia.core.presentation.DarkBlue
 import com.plcoding.bookpedia.core.presentation.DesertWhite
+import com.plcoding.bookpedia.core.presentation.SandYellow
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -111,7 +117,7 @@ fun BlurredImageBackground(
         ) {
             Spacer(modifier = Modifier.fillMaxHeight(fraction = 0.15f))
             ElevatedCard(
-                modifier = Modifier.widthIn(200.dp).aspectRatio(2 / 3f),
+                modifier = Modifier.height(200.dp).aspectRatio(2 / 3f),
                 shape = RoundedCornerShape(16.dp),
                 colors = CardDefaults.elevatedCardColors(
                     containerColor = Color.Transparent
@@ -137,7 +143,26 @@ fun BlurredImageBackground(
                                         ContentScale.Fit
                                     }
                                 )
-
+                                IconButton(
+                                    modifier = Modifier.align(Alignment.BottomEnd).background(
+                                        brush = Brush.radialGradient(
+                                            colors = listOf(
+                                                SandYellow, Color.Transparent
+                                            ),
+                                            radius = 70f,
+                                        )
+                                    ),
+                                    onClick = onFavoriteClick,
+                                ) {
+                                    Icon(
+                                        painter = if (isFavorite) painterResource(Res.drawable.favorite_filled_24px) else painterResource(
+                                            Res.drawable.favorite_24px
+                                        ),
+                                        contentDescription = if (isFavorite) stringResource(Res.string.remove_from_favorites) else stringResource(
+                                            Res.string.add_to_favorite
+                                        )
+                                    )
+                                }
                             }
 
                         }
@@ -145,6 +170,7 @@ fun BlurredImageBackground(
                 }
             }
         }
+        content()
     }
 
 }
