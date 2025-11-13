@@ -5,6 +5,7 @@
     <string name="clear_search_hint">Clear search</string>
     <string name="book_cover_hint">Book cover</string>
     <string name="average_rating_x">Average rating: %1$s</string>
+    <string name="empty_x">%1$s</string>
     <string name="star_hint">Rating star</string>
     <string name="details_icon_hint">Details icon</string>
     <string name="search_results">Search results</string>
