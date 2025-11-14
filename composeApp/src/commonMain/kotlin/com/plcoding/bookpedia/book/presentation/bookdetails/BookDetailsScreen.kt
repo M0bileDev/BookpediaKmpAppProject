@@ -1,14 +1,18 @@
 package com.plcoding.bookpedia.book.presentation.bookdetails
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -24,13 +28,17 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import cmp_bookpedia.composeapp.generated.resources.Res
+import cmp_bookpedia.composeapp.generated.resources.description_not_available
 import cmp_bookpedia.composeapp.generated.resources.empty_x
+import cmp_bookpedia.composeapp.generated.resources.languages
 import cmp_bookpedia.composeapp.generated.resources.pages
 import cmp_bookpedia.composeapp.generated.resources.rating
 import cmp_bookpedia.composeapp.generated.resources.star_24px
 import cmp_bookpedia.composeapp.generated.resources.star_hint
+import cmp_bookpedia.composeapp.generated.resources.synopsis
 import com.plcoding.bookpedia.book.presentation.bookdetails.components.BlurredImageBackground
 import com.plcoding.bookpedia.book.presentation.bookdetails.components.BookChip
+import com.plcoding.bookpedia.book.presentation.bookdetails.components.ChipSize
 import com.plcoding.bookpedia.book.presentation.bookdetails.components.TitledContent
 import com.plcoding.bookpedia.core.presentation.SandYellow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -147,6 +155,60 @@ fun BookDetailsScreen(
                     } ?: Unit
                 }
 
+                state.book.languages?.let { languages ->
+                    if (languages.isNotEmpty()) {
+                        TitledContent(
+                            modifier = Modifier.padding(vertical = 8.dp),
+                            title = stringResource(Res.string.languages)
+                        ) {
+                            FlowRow(
+                                modifier = Modifier.wrapContentSize(Alignment.Center),
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                languages.forEach {
+                                    BookChip(
+                                        modifier = Modifier.padding(2.dp),
+                                        chipSize = ChipSize.SMALL
+                                    ) {
+                                        Text(
+                                            text = it.uppercase(),
+                                            style = MaterialTheme.typography.bodyMedium
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        Unit
+                    }
+                } ?: Unit
+
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.Start)
+                        .padding(top = 24.dp, bottom = 8.dp),
+                    text = stringResource(Res.string.synopsis),
+                    style = MaterialTheme.typography.titleLarge
+                )
+
+                if (state.isLoading) {
+                    Box(
+                        modifier = Modifier.fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                } else {
+                    Text(
+                        modifier = Modifier.padding(vertical = 8.dp),
+                        text = state.book.description
+                            ?: stringResource(
+                                Res.string.description_not_available
+                            ),
+                        style = MaterialTheme.typography.bodyMedium,
+                        textAlign = TextAlign.Justify
+                    )
+                }
             }
         } ?: Unit
 
