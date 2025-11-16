@@ -41,7 +41,7 @@ fun App() {
                         navigateToBookDetails = { book ->
                             sharedViewModel.onSelectedBook(book)
                             navController.navigate(
-                                route = Route.Book.BookDetails
+                                route = Route.Book.BookDetails(book.id)
                             )
                         }
                     )
