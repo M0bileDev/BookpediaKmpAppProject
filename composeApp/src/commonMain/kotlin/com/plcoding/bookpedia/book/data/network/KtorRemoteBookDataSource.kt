@@ -1,5 +1,6 @@
 package com.plcoding.bookpedia.book.data.network
 
+import com.plcoding.bookpedia.book.data.dto.BookWorkDto
 import com.plcoding.bookpedia.book.data.dto.search.SearchedBookResponseDto
 import com.plcoding.bookpedia.core.data.safeCall
 import com.plcoding.bookpedia.core.domain.DataError
@@ -13,21 +14,32 @@ private const val BASE_URL = "https://openlibrary.org"
 class KtorRemoteBookDataSource(
     private val httpClient: HttpClient
 ) : RemoteBookDataSource {
+
     override suspend fun searchBooks(
         query: String,
-        limit: Int?
+        resultLimit: Int?
     ): Result<SearchedBookResponseDto, DataError.Remote> {
         return safeCall<SearchedBookResponseDto> {
             httpClient.get(
                 "$BASE_URL/search.json"
             ) {
                 parameter("q", query)
-                parameter("limit", limit)
+                parameter("limit", resultLimit)
                 parameter("language", "eng")
                 parameter(
                     "fields",
                     "key,title,language,cover_i,author_key,author_name,cover_edition_key,first_publish_year,ratings_average,ratings_count,number_of_pages_median,edition_count"
                 )
+            }
+        }
+    }
+
+    override suspend fun getBookDescription(bookWorkId: String): Result<BookWorkDto, DataError.Remote> {
+        return safeCall<BookWorkDto> {
+            httpClient.get(
+                "$BASE_URL/works/$bookWorkId.json"
+            ) {
+
             }
         }
     }
