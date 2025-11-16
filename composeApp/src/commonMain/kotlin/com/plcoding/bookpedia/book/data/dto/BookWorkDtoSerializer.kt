@@ -10,6 +10,7 @@ import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.encoding.decodeStructure
+import kotlinx.serialization.encoding.encodeStructure
 import kotlinx.serialization.json.JsonDecoder
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -29,8 +30,10 @@ object BookWorkDtoSerializer : KSerializer<BookWorkDto> {
     override fun serialize(
         encoder: Encoder,
         value: BookWorkDto
-    ) {
-        TODO("Not yet implemented")
+    ) = encoder.encodeStructure(descriptor) {
+        value.description?.let {
+            encodeStringElement(descriptor, 0, it)
+        }
     }
 
     override fun deserialize(decoder: Decoder): BookWorkDto = decoder.decodeStructure(descriptor) {
