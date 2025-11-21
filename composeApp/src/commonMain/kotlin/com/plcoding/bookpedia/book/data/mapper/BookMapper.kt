@@ -30,12 +30,28 @@ fun Book.toBookEntity(): BookEntity {
         title = title,
         description = description,
         imageUrl = imageUrl,
-        languages = languages ?: emptyList(),
+        languages = languages,
         authors = authors,
         firstPublishYear = firstPublicationYear,
         ratingsAverage = averageRating,
         ratingsCount = ratingCount,
         numPagesMedian = numPages,
         numEditions = numEdition
+    )
+}
+
+fun BookEntity.toBook(): Book {
+    return Book(
+        id = id,
+        title = title,
+        description = description,
+        imageUrl = imageUrl,
+        languages = languages,
+        authors = authors,
+        firstPublicationYear = firstPublishYear,
+        averageRating = ratingsAverage,
+        ratingCount = ratingsCount,
+        numPages = numPagesMedian,
+        numEdition = numEditions
     )
 }
