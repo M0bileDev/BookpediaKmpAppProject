@@ -12,6 +12,8 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -25,6 +27,7 @@ class BookDetailsViewModel(
     private val _state = MutableStateFlow(BookDetailsState.createDefault())
     val state = _state.onStart {
         fetchBookDescription()
+        observeFavoriteStatus()
     }.stateIn(
         viewModelScope,
         SharingStarted.Lazily,
@@ -46,7 +49,18 @@ class BookDetailsViewModel(
                 }
             }
 
-            is BookDetailsAction.OnFavoriteClick -> {}
+            is BookDetailsAction.OnFavoriteClick -> {
+                viewModelScope.launch {
+                    if (state.value.isFavorite) {
+                        bookRepository.removeFavoriteBook(bookWorkId)
+                    } else {
+                        state.value.book?.let {
+                            bookRepository.addFavoriteBook(it)
+                        }
+                    }
+                }
+            }
+
             is BookDetailsAction.OnSelectedBookChanged -> {
                 _state.update {
                     it.copy(
@@ -55,6 +69,17 @@ class BookDetailsViewModel(
                 }
             }
         }
+    }
+
+    private fun observeFavoriteStatus() {
+        bookRepository.isBookFavorite(bookWorkId)
+            .onEach { isFavorite ->
+                _state.update {
+                    it.copy(
+                        isFavorite = isFavorite
+                    )
+                }
+            }.launchIn(viewModelScope)
     }
 
     private fun fetchBookDescription() {
