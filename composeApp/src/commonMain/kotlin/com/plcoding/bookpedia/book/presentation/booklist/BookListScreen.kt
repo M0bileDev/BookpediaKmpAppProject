@@ -191,7 +191,7 @@ fun BookListScreen(
 
                                         else -> {
                                             BookList(
-                                                modifier = Modifier.fillMaxWidth(),
+                                                modifier = Modifier.fillMaxSize(),
                                                 books = state.searchResult,
                                                 onClick = { book ->
                                                     onAction(BookListScreenAction.OnBookClick(book))
@@ -213,7 +213,7 @@ fun BookListScreen(
                                     )
                                 }else{
                                     BookList(
-                                        modifier = Modifier.fillMaxWidth(),
+                                        modifier = Modifier.fillMaxSize(),
                                         books = state.favoriteBooks,
                                         onClick = { book ->
                                             onAction(BookListScreenAction.OnBookClick(book))
