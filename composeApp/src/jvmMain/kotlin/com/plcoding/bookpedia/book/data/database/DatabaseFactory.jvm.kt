@@ -1,5 +1,6 @@
 package com.plcoding.bookpedia.book.data.database
 
+import androidx.room.Room
 import androidx.room.RoomDatabase
 import java.io.File
 
@@ -15,8 +16,11 @@ actual class DatabaseFactory {
             else -> File(userHome, ".local/share/$BOOKPEDIA")
         }
 
-        if(!appDirectory.exists()){
+        if (!appDirectory.exists()) {
             appDirectory.mkdir()
         }
+
+        val dbFile = File(appDirectory, DATABASE_NAME)
+        return Room.databaseBuilder(dbFile.absolutePath)
     }
 }
