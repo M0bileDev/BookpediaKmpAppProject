@@ -12,11 +12,11 @@ interface FavoriteBookDao {
     suspend fun upsert(bookEntity: BookEntity)
 
     @Query("SELECT * FROM bookentity")
-    fun getFavoriteBooks() : Flow<List<BookEntity>>
+    fun getFavoriteBooks(): Flow<List<BookEntity>>
 
     @Query("SELECT * FROM bookentity WHERE id=:id LIMIT 1")
-    suspend fun getFavoriteBook(id: String) : BookEntity?
+    fun getFavoriteBook(id: String): Flow<BookEntity?>
 
     @Query("DELETE FROM bookentity WHERE id=:id")
-    suspend fun deleteFavoriteBook(id: String) : BookEntity?
+    suspend fun deleteFavoriteBook(id: String): BookEntity?
 }
