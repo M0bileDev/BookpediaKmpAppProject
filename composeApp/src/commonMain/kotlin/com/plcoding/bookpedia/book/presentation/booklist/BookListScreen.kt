@@ -110,7 +110,7 @@ fun BookListScreen(
         modifier = modifier.fillMaxSize().background(DarkBlue).statusBarsPadding()
     ) {
         SearchBar(
-            modifier = Modifier.widthIn(max = 400.dp).fillMaxWidth().padding(16.dp),
+            modifier = Modifier.widthIn(max = 400.dp).fillMaxWidth().padding(16.dp).align(Alignment.CenterHorizontally),
             searchQuery = state.searchQuery,
             onSearchQueryChanged = { search ->
                 onAction(BookListScreenAction.OnSearchQueryChanged(search))
