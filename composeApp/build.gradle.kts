@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
+    alias(libs.plugins.cocoapods)
 }
 
 kotlin {
@@ -19,20 +20,25 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
+
+    jvm()
+
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+    cocoapods {
+        summary = "Shared code"
+        homepage = "https://example.com"
+
+        version = "1.0.0"            // <-- REQUIRED
+        ios.deploymentTarget = "14.0"
+
+        framework {
             baseName = "ComposeApp"
             isStatic = true
         }
     }
     
-    jvm()
-
     room {
         schemaDirectory("$projectDir/schemas")
     }
@@ -75,7 +81,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.swing)
             implementation(libs.ktor.client.okhttp)
         }
-        nativeMain.dependencies {
+        iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
         }
 
