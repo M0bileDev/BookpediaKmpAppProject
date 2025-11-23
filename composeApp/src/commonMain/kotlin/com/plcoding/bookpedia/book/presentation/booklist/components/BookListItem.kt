@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -42,6 +41,7 @@ import cmp_bookpedia.composeapp.generated.resources.star_hint
 import coil3.compose.rememberAsyncImagePainter
 import com.plcoding.bookpedia.book.domain.Book
 import com.plcoding.bookpedia.core.presentation.LightBlue
+import com.plcoding.bookpedia.core.presentation.PulseAnimations
 import com.plcoding.bookpedia.core.presentation.SandYellow
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -60,7 +60,8 @@ fun BookListItem(
         shape = RoundedCornerShape(32.dp)
     ) {
         Row(
-            modifier = Modifier.background(backgroundColor).fillMaxWidth().height(IntrinsicSize.Min).padding(16.dp),
+            modifier = Modifier.background(backgroundColor).fillMaxWidth().height(IntrinsicSize.Min)
+                .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
@@ -85,7 +86,10 @@ fun BookListItem(
                 )
 
                 when (val result = imageResult) {
-                    null -> CircularProgressIndicator()
+                    null -> PulseAnimations(
+                        modifier = Modifier.size(60.dp)
+                    )
+
                     else -> {
                         Image(
                             modifier = Modifier.aspectRatio(
