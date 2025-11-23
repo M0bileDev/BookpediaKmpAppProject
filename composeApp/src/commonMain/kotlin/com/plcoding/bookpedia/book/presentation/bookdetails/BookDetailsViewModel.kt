@@ -30,7 +30,7 @@ class BookDetailsViewModel(
         observeFavoriteStatus()
     }.stateIn(
         viewModelScope,
-        SharingStarted.Lazily,
+        SharingStarted.WhileSubscribed(5000),
         _state.value
     )
 
